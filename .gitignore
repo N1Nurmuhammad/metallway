@@ -1,0 +1,80 @@
+# Python / Django
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.pyd
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Type checkers
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+
+# Environments
+.env
+.venv
+venv/
+env/
+ENV/
+
+# IDEs and editors
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Django specific
+local_settings.py
+static/
+staticfiles/
+media/
+
+# SQLite database
+*.sqlite3
+db.sqlite3
+
+# Logs
+*.log
+
+# Swagger cache (if any)
+.swagger_cache/

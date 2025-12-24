@@ -1,0 +1,5 @@
+django
+django-parler==2.3
+djangorestframework>=3.14,<4
+drf-yasg>=1.21,<2
+pillow
