@@ -17,9 +17,9 @@ class ProductsModel(TranslatableBaseModel):
     is_in_stock = models.BooleanField(default=False)
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=100),
-        standard=models.CharField(max_length=50),
+        name=models.CharField(max_length=100, null=True, blank=True),
+        standard=models.CharField(max_length=50, null=True, blank=True),
     )
 
     def __str__(self):
-        return self.name
+        return self.name or ""

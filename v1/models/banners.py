@@ -4,10 +4,10 @@ from .base import TranslatableBaseModel
 
 class BannersModel(TranslatableBaseModel):
     translations = TranslatedFields(
-        title=models.CharField(max_length=255),
-        text=models.TextField(),
+        title=models.CharField(max_length=255, null=True, blank=True),
+        text=models.TextField(null=True, blank=True),
     )
     background_image = models.ImageField(upload_to="banners/")
 
     def __str__(self):
-        return self.title
+        return self.title or ""

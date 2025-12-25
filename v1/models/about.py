@@ -5,12 +5,12 @@ from .base import TranslatableBaseModel
 
 class AboutUsModel(TranslatableBaseModel):
     translations = TranslatedFields(
-        title=models.CharField(max_length=100),
-        text=models.TextField(),
+        title=models.CharField(max_length=100, null=True, blank=True),
+        text=models.TextField(null=True, blank=True),
     )
     icon = models.ImageField(upload_to='icons')
 
     def __str__(self):
-        return self.title
+        return self.title or ""
 
 

@@ -5,9 +5,9 @@ from .base import TranslatableBaseModel
 
 class OurClientsModel(TranslatableBaseModel):
     translations = TranslatedFields(
-        name=models.CharField(max_length=100),
+        name=models.CharField(max_length=100, null=True, blank=True),
     )
     logo = models.ImageField(upload_to="logos")
 
     def __str__(self):
-        return self.name
+        return self.name or ""
