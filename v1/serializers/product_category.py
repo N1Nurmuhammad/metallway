@@ -1,10 +1,9 @@
 from rest_framework import serializers
 
 from v1.models.product_category import ProductsCategoryModel
-from .mixins import TranslatableFieldsSerializerMixin
 
 
-class ProductsCategoryGetSerializer(TranslatableFieldsSerializerMixin):
+class ProductsCategoryGetSerializer(serializers.ModelSerializer):
     translatable_fields = ("name",)
 
     class Meta:
@@ -13,7 +12,6 @@ class ProductsCategoryGetSerializer(TranslatableFieldsSerializerMixin):
             "id",
             "name",
             "image",
-            "translations",
             "created_at",
             "updated_at",
         )

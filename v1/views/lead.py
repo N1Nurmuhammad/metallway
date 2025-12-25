@@ -7,14 +7,12 @@ from drf_yasg.utils import swagger_auto_schema
 from v1.models.lead import LeadModel
 from v1.serializers import LeadGetSerializer
 from v1.serializers.lead import LeadCreateSerializer
-from v1.utils.i18n import activate_request_language
 
 
 @swagger_auto_schema(method='post', request_body=LeadCreateSerializer, responses={201: LeadGetSerializer, 400: 'Validation Error'})
 @swagger_auto_schema(method='get', responses={200: LeadGetSerializer(many=True)})
 @api_view(["GET", "POST"])
 def list_leads(request):
-    activate_request_language(request)
     if request.method == "POST":
         serializer = LeadCreateSerializer(data=request.data)
         if serializer.is_valid():
@@ -31,7 +29,6 @@ def list_leads(request):
 
 @api_view(["GET"])
 def retrieve_lead(request, pk: int):
-    activate_request_language(request)
     instance = get_object_or_404(LeadModel, pk=pk)
     serializer = LeadGetSerializer(instance)
     return Response(serializer.data)

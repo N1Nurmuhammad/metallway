@@ -84,6 +84,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -98,18 +99,23 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 # PostgreSQL using individual environment variables (no DATABASE_URL required)
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': env('DJANGO_DB_NAME', default='myproject'),
+#         'USER': env('DJANGO_DB_USER', default='myprojectuser'),
+#         'PASSWORD': env('DJANGO_DB_PASSWORD', default='password'),
+#         'HOST': env('DJANGO_DB_HOST', default='localhost'),
+#         'PORT': env('DJANGO_DB_PORT', default=''),
+#         'CONN_MAX_AGE': 60,
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('DJANGO_DB_NAME', default='myproject'),
-        'USER': env('DJANGO_DB_USER', default='myprojectuser'),
-        'PASSWORD': env('DJANGO_DB_PASSWORD', default='password'),
-        'HOST': env('DJANGO_DB_HOST', default='localhost'),
-        'PORT': env('DJANGO_DB_PORT', default=''),
-        'CONN_MAX_AGE': 60,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

@@ -1,10 +1,9 @@
 from rest_framework import serializers
 
 from v1.models.banners import BannersModel
-from .mixins import TranslatableFieldsSerializerMixin
 
 
-class BannersGetSerializer(TranslatableFieldsSerializerMixin):
+class BannersGetSerializer(serializers.ModelSerializer):
     translatable_fields = ("title", "text")
 
     class Meta:
@@ -14,7 +13,6 @@ class BannersGetSerializer(TranslatableFieldsSerializerMixin):
             "title",
             "text",
             "background_image",
-            "translations",
             "created_at",
             "updated_at",
         )

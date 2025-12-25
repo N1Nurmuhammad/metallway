@@ -25,7 +25,7 @@ python manage.py createsuperuser  # optional
 python manage.py runserver
 ```
 Visit:
-- API: http://127.0.0.1:8000/api/v1/
+- API (language-prefixed): http://127.0.0.1:8000/en/api/v1/ (also /ru/, /uz/, /kz/)
 - Swagger: http://127.0.0.1:8000/swagger/
 - Admin: http://127.0.0.1:8000/admin/
 
@@ -72,11 +72,16 @@ python manage.py migrate
 This project includes django-import-export. In the Django admin, each model supports CSV/XLSX import and export via the "Import" and "Export" actions on the changelist page.
 
 ## Mock data
-Mock data is seeded via a Django data migration. After setting up the project (and database), simply run:
+Mock data is seeded via Django data migrations. After setting up the project (and database), simply run:
 ```
 python manage.py migrate
 ```
-The migration v1.0002_mock_data creates sample categories, products, banners, about-us entry, statistics, clients, and a lead. It uses placeholder file paths for image fields; files are not required to exist.
+The migrations:
+- v1.0002_mock_data — creates sample categories, products, banners, about-us entry, statistics, clients, and a lead. It uses placeholder file paths for image fields; files are not required to exist.
+- v1.0003_more_products — adds 30+ additional products.
+- v1.0007_multilang_mock_data — copies English content into Uzbek (uz), Russian (ru), and Kazakh (kz) translations so that all mock records have values in all supported languages.
+- v1.0008_fill_missing_translations — backfills Uzbek, Russian, and Kazakh translations from English if they are missing or empty.
+- v1.0009_real_translations — populates Uzbek, Russian, and Kazakh mock translations with localized strings instead of English copies.
 
 ## Static and media files
 - Static files are collected to the "staticfiles" directory. In production, WhiteNoise serves them.
