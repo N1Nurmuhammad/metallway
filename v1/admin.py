@@ -1,5 +1,5 @@
 from django.contrib import admin
-from import_export.admin import ImportExportModelAdmin
+from django.contrib.admin import ModelAdmin
 from parler.admin import TranslatableAdmin
 
 from v1.models import (
@@ -11,57 +11,47 @@ from v1.models import (
     StatisticsModel,
     OurClientsModel,
 )
-from v1.admin_resources import (
-    AboutUsResource,
-    BannersResource,
-    OurClientsResource,
-    ProductsCategoryResource,
-    ProductsResource,
-)
+
 
 
 @admin.register(AboutUsModel)
-class AboutUsAdmin(TranslatableAdmin, ImportExportModelAdmin):
+class AboutUsAdmin(TranslatableAdmin, ):
     list_display = ("id", "title", "created_at", "updated_at")
     search_fields = ("translations__title",)
     ordering = ("-id",)
-    resource_class = AboutUsResource
 
 
 @admin.register(BannersModel)
-class BannersAdmin(TranslatableAdmin, ImportExportModelAdmin):
+class BannersAdmin(TranslatableAdmin, ):
     list_display = ("id", "title", "created_at", "updated_at")
     search_fields = ("translations__title",)
     ordering = ("-id",)
-    resource_class = BannersResource
 
 
 @admin.register(ProductsCategoryModel)
-class ProductsCategoryAdmin(TranslatableAdmin, ImportExportModelAdmin):
+class ProductsCategoryAdmin(TranslatableAdmin, ):
     list_display = ("id", "name", "created_at", "updated_at")
     search_fields = ("translations__name",)
     ordering = ("translations__name",)
-    resource_class = ProductsCategoryResource
 
 
 @admin.register(ProductsModel)
-class ProductsAdmin(TranslatableAdmin, ImportExportModelAdmin):
+class ProductsAdmin(TranslatableAdmin, ):
     list_display = ("id", "name", "category", "price", "units", "is_in_stock", "created_at")
     list_filter = ("category", "units", "is_in_stock")
     search_fields = ("translations__name", "translations__standard")
     ordering = ("translations__name",)
-    resource_class = ProductsResource
 
 
 @admin.register(LeadModel)
-class LeadAdmin(ImportExportModelAdmin):
+class LeadAdmin(ModelAdmin):
     list_display = ("id", "name", "email", "created_at")
     search_fields = ("name", "email")
     ordering = ("-created_at",)
 
 
 @admin.register(StatisticsModel)
-class StatisticsAdmin(ImportExportModelAdmin):
+class StatisticsAdmin(ModelAdmin):
     list_display = (
         "id",
         "delivered",
@@ -75,8 +65,7 @@ class StatisticsAdmin(ImportExportModelAdmin):
 
 
 @admin.register(OurClientsModel)
-class OurClientsAdmin(TranslatableAdmin, ImportExportModelAdmin):
+class OurClientsAdmin(TranslatableAdmin, ):
     list_display = ("id", "name", "created_at", "updated_at")
     search_fields = ("translations__name",)
     ordering = ("translations__name",)
-    resource_class = OurClientsResource
