@@ -1,9 +1,20 @@
 from rest_framework import serializers
 
 from v1.models.about import AboutUsModel
+from .mixins import TranslatableFieldsSerializerMixin
 
 
-class AboutUsGetSerializer(serializers.ModelSerializer):
+class AboutUsGetSerializer(TranslatableFieldsSerializerMixin):
+    translatable_fields = ("title", "text")
+
     class Meta:
         model = AboutUsModel
-        fields = "__all__"
+        fields = (
+            "id",
+            "title",
+            "text",
+            "icon",
+            "translations",
+            "created_at",
+            "updated_at",
+        )
