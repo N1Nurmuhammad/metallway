@@ -1,5 +1,6 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
+from parler.admin import TranslatableAdmin
 
 from v1.models import (
     AboutUsModel,
@@ -13,32 +14,32 @@ from v1.models import (
 
 
 @admin.register(AboutUsModel)
-class AboutUsAdmin(ImportExportModelAdmin):
+class AboutUsAdmin(TranslatableAdmin, ImportExportModelAdmin):
     list_display = ("id", "title", "created_at", "updated_at")
-    search_fields = ("title",)
+    search_fields = ("translations__title",)
     ordering = ("-id",)
 
 
 @admin.register(BannersModel)
-class BannersAdmin(ImportExportModelAdmin):
+class BannersAdmin(TranslatableAdmin, ImportExportModelAdmin):
     list_display = ("id", "title", "created_at", "updated_at")
-    search_fields = ("title",)
+    search_fields = ("translations__title",)
     ordering = ("-id",)
 
 
 @admin.register(ProductsCategoryModel)
-class ProductsCategoryAdmin(ImportExportModelAdmin):
+class ProductsCategoryAdmin(TranslatableAdmin, ImportExportModelAdmin):
     list_display = ("id", "name", "created_at", "updated_at")
-    search_fields = ("name",)
-    ordering = ("name",)
+    search_fields = ("translations__name",)
+    ordering = ("translations__name",)
 
 
 @admin.register(ProductsModel)
-class ProductsAdmin(ImportExportModelAdmin):
+class ProductsAdmin(TranslatableAdmin, ImportExportModelAdmin):
     list_display = ("id", "name", "category", "price", "units", "is_in_stock", "created_at")
     list_filter = ("category", "units", "is_in_stock")
-    search_fields = ("name",)
-    ordering = ("name",)
+    search_fields = ("translations__name", "translations__standard")
+    ordering = ("translations__name",)
 
 
 @admin.register(LeadModel)
@@ -63,7 +64,7 @@ class StatisticsAdmin(ImportExportModelAdmin):
 
 
 @admin.register(OurClientsModel)
-class OurClientsAdmin(ImportExportModelAdmin):
+class OurClientsAdmin(TranslatableAdmin, ImportExportModelAdmin):
     list_display = ("id", "name", "created_at", "updated_at")
-    search_fields = ("name",)
-    ordering = ("name",)
+    search_fields = ("translations__name",)
+    ordering = ("translations__name",)

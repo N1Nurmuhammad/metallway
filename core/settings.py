@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'import_export',
+    'parler',
     'v1.apps.V1Config'
 ]
 
@@ -65,6 +66,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -95,10 +97,17 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-# Use DATABASE_URL if provided (e.g., postgres), fallback to local sqlite
+# PostgreSQL using individual environment variables (no DATABASE_URL required)
 DATABASES = {
-    'default': env.db('DATABASE_URL', default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env('DJANGO_DB_NAME', default='myproject'),
+        'USER': env('DJANGO_DB_USER', default='myprojectuser'),
+        'PASSWORD': env('DJANGO_DB_PASSWORD', default='password'),
+        'HOST': env('DJANGO_DB_HOST', default='localhost'),
+        'PORT': env('DJANGO_DB_PORT', default=''),
+        'CONN_MAX_AGE': 60,
+    }
 }
 
 
@@ -124,7 +133,27 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+
+LANGUAGES = [
+    ('uz', 'Uzbek'),
+    ('ru', 'Russian'),
+    ('en', 'English'),
+    ('kz', 'Kazakh'),
+]
+
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'uz'},
+        {'code': 'ru'},
+        {'code': 'en'},
+        {'code': 'kz'},
+    ),
+    'default': {
+        'fallbacks': ['en'],
+        'hide_untranslated': False,
+    }
+}
 
 TIME_ZONE = 'UTC'
 

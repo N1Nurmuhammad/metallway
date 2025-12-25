@@ -6,7 +6,7 @@ This project is a Django REST API for Metall. It is configured for both local de
 - Django REST Framework API with function-based views
 - Swagger and ReDoc documentation via drf-yasg at /swagger and /redoc
 - Admin site at /admin
-- Environment-driven settings (SECRET_KEY, DEBUG, ALLOWED_HOSTS, etc.)
+- Environment-driven settings (SECRET_KEY, DEBUG, ALLOWED_HOSTS, DB, etc.)
 - Static files served by WhiteNoise in production
 - Media files support (served by Django only in DEBUG)
 
@@ -37,7 +37,11 @@ Supported keys:
 - DJANGO_DEBUG: "False" in production. Defaults to True.
 - DJANGO_ALLOWED_HOSTS: Comma-separated hosts, e.g. "example.com,www.example.com". Defaults to "*".
 - DJANGO_CSRF_TRUSTED_ORIGINS: Comma-separated origins, e.g. "https://example.com,https://www.example.com".
-- DATABASE_URL: Optional. If set, configures the database (e.g., PostgreSQL). If not set, falls back to local SQLite.
+- DJANGO_DB_NAME: Database name (e.g., myproject).
+- DJANGO_DB_USER: Database user (e.g., myprojectuser).
+- DJANGO_DB_PASSWORD: Database password.
+- DJANGO_DB_HOST: Database host (e.g., localhost).
+- DJANGO_DB_PORT: Database port (leave empty for default 5432).
 - DJANGO_SESSION_COOKIE_SECURE: Set to "True" if serving over HTTPS.
 - DJANGO_CSRF_COOKIE_SECURE: Set to "True" if serving over HTTPS.
 - DJANGO_SECURE_SSL_REDIRECT: Set to "True" to force HTTPS.

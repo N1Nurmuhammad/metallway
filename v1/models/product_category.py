@@ -1,11 +1,13 @@
-
-from .base import BaseModel
 from django.db import models
+from parler.models import TranslatedFields
+from .base import TranslatableBaseModel
 
 
-class ProductsCategoryModel(BaseModel):
+class ProductsCategoryModel(TranslatableBaseModel):
     image = models.ImageField(upload_to='products_category')
-    name = models.CharField(max_length=100)
+    translations = TranslatedFields(
+        name=models.CharField(max_length=100),
+    )
 
     def __str__(self):
         return self.name
