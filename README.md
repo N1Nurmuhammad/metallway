@@ -54,9 +54,13 @@ cp .env.example .env
 ```
 
 ### PostgreSQL configuration
-Set DATABASE_URL in your .env, for example:
+Set the individual database settings in your .env, for example:
 ```
-DATABASE_URL=postgres://metall_user:metall_pass@localhost:5432/metall_db
+DJANGO_DB_NAME=myproject
+DJANGO_DB_USER=myprojectuser
+DJANGO_DB_PASSWORD=password
+DJANGO_DB_HOST=localhost
+DJANGO_DB_PORT=
 ```
 Install requirements and run migrations:
 ```

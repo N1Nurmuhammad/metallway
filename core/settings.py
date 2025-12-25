@@ -18,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Initialize environment variables and read from .env if present
 env = environ.Env(
-    DJANGO_SECRET_KEY=(str, 'django-insecure-l0kmgq7v73d0bnp=#nq4j^baqm5eiv-s76%3hx(%t^)&_q*z0y'),
+    DJANGO_SECRET_KEY=(str, 'changeme'),
     DJANGO_DEBUG=(bool, True),
     DJANGO_ALLOWED_HOSTS=(list, ['*']),
     DJANGO_CSRF_TRUSTED_ORIGINS=(list, []),
