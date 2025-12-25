@@ -10,22 +10,40 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import environ
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Initialize environment variables and read from .env if present
+env = environ.Env(
+    DJANGO_SECRET_KEY=(str, 'django-insecure-l0kmgq7v73d0bnp=#nq4j^baqm5eiv-s76%3hx(%t^)&_q*z0y'),
+    DJANGO_DEBUG=(bool, True),
+    DJANGO_ALLOWED_HOSTS=(list, ['*']),
+    DJANGO_CSRF_TRUSTED_ORIGINS=(list, []),
+    DJANGO_SESSION_COOKIE_SECURE=(bool, False),
+    DJANGO_CSRF_COOKIE_SECURE=(bool, False),
+    DJANGO_SECURE_SSL_REDIRECT=(bool, False),
+    DJANGO_SECURE_PROXY_SSL_HEADER=(bool, False),
+)
+# Read .env file at project root if it exists
+environ.Env.read_env(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-l0kmgq7v73d0bnp=#nq4j^baqm5eiv-s76%3hx(%t^)&_q*z0y'
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DJANGO_DEBUG')
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
+
+# CSRF trusted origins for HTTPS proxies (comma-separated list of origins)
+CSRF_TRUSTED_ORIGINS = env.list('DJANGO_CSRF_TRUSTED_ORIGINS')
 
 
 # Application definition
@@ -39,11 +57,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_yasg',
+    'import_export',
     'v1.apps.V1Config'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -57,8 +77,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,11 +96,9 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# Use DATABASE_URL if provided (e.g., postgres), fallback to local sqlite
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': env.db('DATABASE_URL', default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")
 }
 
 
@@ -119,9 +136,23 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Optional production security settings (configurable via env)
+SESSION_COOKIE_SECURE = env.bool('DJANGO_SESSION_COOKIE_SECURE')
+CSRF_COOKIE_SECURE = env.bool('DJANGO_CSRF_COOKIE_SECURE')
+SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT')
+# Set if behind a proxy like Nginx forwarding HTTPS
+if env.bool('DJANGO_SECURE_PROXY_SSL_HEADER'):
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

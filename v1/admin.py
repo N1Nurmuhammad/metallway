@@ -1,4 +1,5 @@
 from django.contrib import admin
+from import_export.admin import ImportExportModelAdmin
 
 from v1.models import (
     AboutUsModel,
@@ -12,28 +13,28 @@ from v1.models import (
 
 
 @admin.register(AboutUsModel)
-class AboutUsAdmin(admin.ModelAdmin):
+class AboutUsAdmin(ImportExportModelAdmin):
     list_display = ("id", "title", "created_at", "updated_at")
     search_fields = ("title",)
     ordering = ("-id",)
 
 
 @admin.register(BannersModel)
-class BannersAdmin(admin.ModelAdmin):
+class BannersAdmin(ImportExportModelAdmin):
     list_display = ("id", "title", "created_at", "updated_at")
     search_fields = ("title",)
     ordering = ("-id",)
 
 
 @admin.register(ProductsCategoryModel)
-class ProductsCategoryAdmin(admin.ModelAdmin):
+class ProductsCategoryAdmin(ImportExportModelAdmin):
     list_display = ("id", "name", "created_at", "updated_at")
     search_fields = ("name",)
     ordering = ("name",)
 
 
 @admin.register(ProductsModel)
-class ProductsAdmin(admin.ModelAdmin):
+class ProductsAdmin(ImportExportModelAdmin):
     list_display = ("id", "name", "category", "price", "units", "is_in_stock", "created_at")
     list_filter = ("category", "units", "is_in_stock")
     search_fields = ("name",)
@@ -41,14 +42,14 @@ class ProductsAdmin(admin.ModelAdmin):
 
 
 @admin.register(LeadModel)
-class LeadAdmin(admin.ModelAdmin):
+class LeadAdmin(ImportExportModelAdmin):
     list_display = ("id", "name", "email", "created_at")
     search_fields = ("name", "email")
     ordering = ("-created_at",)
 
 
 @admin.register(StatisticsModel)
-class StatisticsAdmin(admin.ModelAdmin):
+class StatisticsAdmin(ImportExportModelAdmin):
     list_display = (
         "id",
         "delivered",
@@ -62,7 +63,7 @@ class StatisticsAdmin(admin.ModelAdmin):
 
 
 @admin.register(OurClientsModel)
-class OurClientsAdmin(admin.ModelAdmin):
+class OurClientsAdmin(ImportExportModelAdmin):
     list_display = ("id", "name", "created_at", "updated_at")
     search_fields = ("name",)
     ordering = ("name",)
